@@ -12,6 +12,13 @@ public class UserView extends JFrame {
         setTitle("Login");
 //        setLocation(500, 150);
         setLocationRelativeTo(null);
+
+        JLabel welcome = new JLabel("Login");
+        welcome.setFont(new Font("Arial", Font.BOLD, 40));
+        Container container = this.getContentPane();
+        container.setLayout(null);
+        welcome.setBounds(100, 70, 200, 60);
+        container.add(welcome);
         setVisible(true);
     }
 
