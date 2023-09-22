@@ -2,10 +2,12 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class UserScreen extends JFrame {
     private JTextField userIdTextField;
-    private JTextField passwordTextField;
+    private JTextField passwordPasswordField;
 
     public static void main(String[] args) {
         UserScreen window = new UserScreen();
@@ -35,17 +37,17 @@ public class UserScreen extends JFrame {
         getContentPane().add(userIdTextField);
         userIdTextField.setColumns(10);
 
-        passwordTextField = new JTextField();
-        passwordTextField.setFont(new Font("Dialog", Font.PLAIN, 18));
-        passwordTextField.setBounds(318, 283, 342, 43);
-        getContentPane().add(passwordTextField);
-        passwordTextField.setColumns(10);
-
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
         passwordLabel.setFont(new Font("Dialog", Font.BOLD, 20));
         passwordLabel.setBounds(122, 290, 119, 36);
         getContentPane().add(passwordLabel);
+
+        passwordPasswordField = new JPasswordField();
+        passwordPasswordField.setFont(new Font("Dialog", Font.PLAIN, 18));
+        passwordPasswordField.setBounds(318, 283, 342, 43);
+        getContentPane().add(passwordPasswordField);
+        passwordPasswordField.setColumns(10);
 
         JButton loginButton = new JButton("Login");
         loginButton.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -53,11 +55,25 @@ public class UserScreen extends JFrame {
         getContentPane().add(loginButton);
 
         JButton registerButton = new JButton("Register");
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                register();
+            }
+        });
         registerButton.setFont(new Font("Dialog", Font.BOLD, 18));
         registerButton.setBounds(487, 389, 195, 73);
         getContentPane().add(registerButton);
-        setBounds(100, 100, 871, 585);
+
+        setSize(871, 585);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private void register() {
+        String userId = userIdTextField.getText();
+        String password = passwordPasswordField.getText(); //unable to find method getPassword()
+        System.out.println(password);
     }
 }
