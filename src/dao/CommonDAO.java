@@ -18,10 +18,9 @@ public interface CommonDAO {
         final String PASSWORD = getValues("PASSWORD");
         Connection connect = DriverManager.getConnection(CONNECT_STRING, USER_ID, PASSWORD); // making a connection
 
-//        if (connect != null) {
-//            System.out.println("Connection Established :)");
-//            connect.close();
-//        } // checking if connection established successfully
+        if (connect != null) {
+            System.out.println("Connection Established :)");
+        } // checking if connection established successfully
         return connect;
     }
 }

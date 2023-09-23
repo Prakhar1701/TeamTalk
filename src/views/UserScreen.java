@@ -75,7 +75,7 @@ public class UserScreen extends JFrame {
         setVisible(true);
     }
 
-    private void register()  {
+    private void register() {
         String userId = userIdTextField.getText();
         String password = passwordPasswordField.getText(); //unable to find method getPassword()
 
@@ -84,8 +84,15 @@ public class UserScreen extends JFrame {
 
         try {
             int result = userDAO.add(userDTO);
+            if (result > 0) System.out.println("Added user successfully :)");
+            else System.out.println("Unable to add user :(");
         } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("DB Issue...");
+            e.printStackTrace();
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            System.out.println("Generic Issue...");
+            e.printStackTrace(); // Tells where is the exception
         }
     }
 }

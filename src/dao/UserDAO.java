@@ -15,13 +15,18 @@ public class UserDAO {
         Connection connection = null;
         Statement statement = null;
 
-        connection = CommonDAO.createConnection();
+        try {
+            connection = CommonDAO.createConnection();
 
-        statement = connection.createStatement();
+            statement = connection.createStatement();
 
-        String query = "INSERT INTO users (userId, password) VALUES ('" + userDTO.getUserId() + "', '" + userDTO.getPassword() + "')";
-        int record = statement.executeUpdate(query);  //Inset, Delete, Update
-        return record;
+            String query = "INSERT INTO users (userId, password) VALUES ('" + userDTO.getUserId() + "', '" + userDTO.getPassword() + "')";
+            int record = statement.executeUpdate(query);  //Inset, Delete, Update
+
+            return record;
+        } finally { // Will not be executed only in the case of System.exit();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
     }
-
 }
