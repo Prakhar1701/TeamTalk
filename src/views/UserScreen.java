@@ -84,8 +84,14 @@ public class UserScreen extends JFrame {
 
         try {
             int result = userDAO.add(userDTO);
-            if (result > 0) System.out.println("Added user successfully :)");
-            else System.out.println("Unable to add user :(");
+            if (result > 0) {
+//                System.out.println("Added user successfully :)");
+                JOptionPane.showMessageDialog(this, "Registered successfully.");
+            } else {
+//                System.out.println("Unable to add user :(");
+                JOptionPane.showMessageDialog(this, "Registration unsuccessful.");
+
+            }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("DB Issue...");
             e.printStackTrace();
