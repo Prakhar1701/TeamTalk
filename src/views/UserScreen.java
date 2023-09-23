@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class UserScreen extends JFrame {
     private JTextField userIdTextField;
@@ -74,13 +75,17 @@ public class UserScreen extends JFrame {
         setVisible(true);
     }
 
-    private void register() {
+    private void register()  {
         String userId = userIdTextField.getText();
         String password = passwordPasswordField.getText(); //unable to find method getPassword()
 
         UserDAO userDAO = new UserDAO();
         UserDTO userDTO = new UserDTO(userId, password);
 
-        int result = userDAO.add(userDTO);
+        try {
+            int result = userDAO.add(userDTO);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -6,12 +6,10 @@ import java.sql.SQLException;
 
 import static utils.ConfigReader.getValues;
 
+//Throw exception early and catch later...
+public interface CommonDAO {
 
-public class CommonDAO {
-    public CommonDAO() {
-    }
-
-    public Connection createConnection() throws ClassNotFoundException, SQLException {
+    public static Connection createConnection() throws ClassNotFoundException, SQLException {
 
         Class.forName(getValues("DRIVER")); // loading driver
 
@@ -20,15 +18,10 @@ public class CommonDAO {
         final String PASSWORD = getValues("PASSWORD");
         Connection connect = DriverManager.getConnection(CONNECT_STRING, USER_ID, PASSWORD); // making a connection
 
-        if (connect != null) {
-            System.out.println("Connection Established :)");
-            connect.close();
-        } // checking if connection established successfully
-        return null;
-    }
-
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        CommonDAO cDAO = new CommonDAO();
-        cDAO.createConnection();
+//        if (connect != null) {
+//            System.out.println("Connection Established :)");
+//            connect.close();
+//        } // checking if connection established successfully
+        return connect;
     }
 }
