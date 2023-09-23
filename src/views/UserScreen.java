@@ -1,5 +1,8 @@
 package views;
 
+import dao.UserDAO;
+import dto.UserDTO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -74,6 +77,10 @@ public class UserScreen extends JFrame {
     private void register() {
         String userId = userIdTextField.getText();
         String password = passwordPasswordField.getText(); //unable to find method getPassword()
-        System.out.println(password);
+
+        UserDAO userDAO = new UserDAO();
+        UserDTO userDTO = new UserDTO(userId, password);
+
+        int result = userDAO.add(userDTO);
     }
 }
