@@ -54,6 +54,12 @@ public class UserScreen extends JFrame {
         passwordPasswordField.setColumns(10);
 
         JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                login();
+            }
+        });
         loginButton.setFont(new Font("Dialog", Font.BOLD, 18));
         loginButton.setBounds(187, 389, 195, 73);
         getContentPane().add(loginButton);
@@ -75,11 +81,12 @@ public class UserScreen extends JFrame {
         setVisible(true);
     }
 
+    UserDAO userDAO = new UserDAO();
+
     private void register() {
         String userId = userIdTextField.getText();
         String password = passwordPasswordField.getText(); //unable to find method getPassword()
 
-        UserDAO userDAO = new UserDAO();
         UserDTO userDTO = new UserDTO(userId, password);
 
         try {
@@ -99,6 +106,29 @@ public class UserScreen extends JFrame {
         } catch (Exception e) {
             System.out.println("Generic Issue...");
             e.printStackTrace(); // Tells where is the exception
+        }
+    }
+
+    private void login() {
+        String userId = userIdTextField.getText();
+        String password = passwordPasswordField.getText(); //unable to find method getPassword()
+
+        UserDTO userDTO = new UserDTO(userId, password);
+
+        try {
+
+            String message = null;
+
+            if (userDAO.isLogin(userDTO)) {
+                message = "Welcome " + userId + " !";
+            } else {
+                message = "Invalid UserId or Password.";
+            }
+
+            JOptionPane.showMessageDialog(this, message);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
