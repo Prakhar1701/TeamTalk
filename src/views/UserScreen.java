@@ -120,12 +120,21 @@ public class UserScreen extends JFrame {
             String message = null;
 
             if (userDAO.isLogin(userDTO)) {
+
                 message = "Welcome " + userId + " !";
+
+                JOptionPane.showMessageDialog(this, message);
+
+                setVisible(false);
+                dispose();
+
+                DashBoard dashBoard = new DashBoard(message);
+                dashBoard.setVisible(true);
+
             } else {
                 message = "Invalid UserId or Password.";
+                JOptionPane.showMessageDialog(this, message);
             }
-
-            JOptionPane.showMessageDialog(this, message);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
