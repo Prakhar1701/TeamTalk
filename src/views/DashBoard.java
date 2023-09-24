@@ -12,6 +12,16 @@ public class DashBoard extends JFrame {
     public DashBoard(String title) {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        JMenu chatMenu = new JMenu("Chat");
+        menuBar.add(chatMenu);
+
+        JMenuItem startChat = new JMenuItem("Start Chat");
+        chatMenu.add(startChat);
+
         contentPane = new JPanel();
         contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
