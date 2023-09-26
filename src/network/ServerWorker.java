@@ -8,9 +8,11 @@ public class ServerWorker extends Thread {
     private Socket clientSocket;
     private InputStream in;
     private OutputStream out;
+    private Server server;
 
-    public ServerWorker(Socket clientSocket) throws IOException {
+    public ServerWorker(Socket clientSocket, Server server) throws IOException {
         this.clientSocket = clientSocket;
+        this.server = server;
         in = clientSocket.getInputStream();
         out = clientSocket.getOutputStream();
     }
@@ -24,7 +26,11 @@ public class ServerWorker extends Thread {
             while (true) {
                 line = br.readLine();
                 if (line.equalsIgnoreCase("quit")) break;
-                out.write(line.getBytes());
+//                out.write(line.getBytes());
+                //BroadCasting
+                for (ServerWorker serverWorker : server.workers) {
+                    serverWorker.out.write(line.getBytes());
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

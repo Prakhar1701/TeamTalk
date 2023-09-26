@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Server {
 
     ServerSocket serverSocket;
-    ArrayList<ServerWorker> workers;
+    ArrayList<ServerWorker> workers; //Contains all the client sockets
 
     public Server() throws IOException {
         workers = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Server {
 
         while (true) {
             Socket clientSocket = serverSocket.accept(); //HankShaking
-            ServerWorker serverWorker = new ServerWorker(clientSocket);
+            ServerWorker serverWorker = new ServerWorker(clientSocket, this);
             workers.add(serverWorker);
             serverWorker.start();
         }
