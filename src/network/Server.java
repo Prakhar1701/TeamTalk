@@ -3,12 +3,29 @@ package network;
 import utils.ConfigReader;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
+
     ServerSocket serverSocket;
+
+    public Server() throws IOException {
+        final int PORT = Integer.parseInt(ConfigReader.getValues("PORT_NUMBER"));
+        serverSocket = new ServerSocket(PORT);
+        Socket clientSocket = serverSocket.accept(); //HankShaking
+
+        ServerWorker serverWorker = new ServerWorker(clientSocket);
+        serverWorker.start();
+    }
+
+    // Multiple Client HandShaking
+    public void handleClientRequest() {
+
+    }
+
+    /*
+   // Single Client
 
     public Server() throws IOException {
         final int PORT = Integer.parseInt(ConfigReader.getValues("PORT_NUMBER"));
@@ -28,8 +45,9 @@ public class Server {
         socket.close();
         System.out.println("Server closed...");
     }
+    */
 
-    public static void main(String[] args) throws IOException {
-        new Server();
-    }
+//    public static void main(String[] args) throws IOException {
+//        new Server();
+//    }
 }
