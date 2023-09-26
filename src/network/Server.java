@@ -5,23 +5,31 @@ import utils.ConfigReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server {
 
     ServerSocket serverSocket;
+    ArrayList<ServerWorker> workers;
 
     public Server() throws IOException {
+        workers = new ArrayList<>();
+
         final int PORT = Integer.parseInt(ConfigReader.getValues("PORT_NUMBER"));
         serverSocket = new ServerSocket(PORT);
-        Socket clientSocket = serverSocket.accept(); //HankShaking
 
-        ServerWorker serverWorker = new ServerWorker(clientSocket);
-        serverWorker.start();
+        handleClientRequest();
     }
 
     // Multiple Client HandShaking
-    public void handleClientRequest() {
+    public void handleClientRequest() throws IOException {
 
+        while (true) {
+            Socket clientSocket = serverSocket.accept(); //HankShaking
+            ServerWorker serverWorker = new ServerWorker(clientSocket);
+            workers.add(serverWorker);
+            serverWorker.start();
+        }
     }
 
     /*
