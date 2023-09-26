@@ -2,15 +2,42 @@ package network;
 
 import utils.ConfigReader;
 
+import javax.swing.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client {
     Socket socket;
+    InputStream in;
+    OutputStream out;
+    ClientWorker worker;
+    JTextArea textArea;
 
-    public Client() throws IOException {
+    public Client(JTextArea textArea) throws IOException {
+        final String IP = ConfigReader.getValues("SERVER_IP");
+        final int PORT = Integer.parseInt(ConfigReader.getValues("PORT_NUMBER"));
+        socket = new Socket(IP, PORT);
+
+
+        in = socket.getInputStream();
+        out = socket.getOutputStream();
+
+        this.textArea = textArea;
+    }
+
+    public void sendMessage(String message) throws IOException {
+        out.write(message.getBytes());
+    }
+
+    public void readMessages() {
+        worker = new ClientWorker(in, textArea);
+        worker.start();
+    }
+
+   /*
+   public Client() throws IOException {
         final String IP = ConfigReader.getValues("SERVER_IP");
         final int PORT = Integer.parseInt(ConfigReader.getValues("PORT_NUMBER"));
         socket = new Socket(IP, PORT);
@@ -27,8 +54,9 @@ public class Client {
         scn.close();
         System.out.println("Client exits...");
     }
+    */
 
-    public static void main(String[] args) throws IOException {
-        new Client();
-    }
+//    public static void main(String[] args) throws IOException {
+//        new Client();
+//    }
 }
