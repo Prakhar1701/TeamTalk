@@ -25,9 +25,12 @@ public class Client {
         out = socket.getOutputStream();
 
         this.textArea = textArea;
+
+        readMessages();
     }
 
     public void sendMessage(String message) throws IOException {
+        message = message + "\n";
         out.write(message.getBytes());
     }
 

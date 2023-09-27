@@ -29,6 +29,7 @@ public class ServerWorker extends Thread {
 //                out.write(line.getBytes());
                 //BroadCasting
                 for (ServerWorker serverWorker : server.workers) {
+                    line = line + "\n";
                     serverWorker.out.write(line.getBytes());
                 }
             }

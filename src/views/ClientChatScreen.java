@@ -1,21 +1,30 @@
 package views;
 
+import network.Client;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class ClientChatScreen extends JFrame {
 
     private JPanel contentPane;
     private JTextField messageTextField;
+    private JTextArea textArea;
+    private Client client;
 
     public static void main(String[] args) {
-
-        ClientChatScreen frame = new ClientChatScreen();
-
+        try {
+            ClientChatScreen frame = new ClientChatScreen();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public ClientChatScreen() {
+    public ClientChatScreen() throws IOException {
         setTitle("TeamTalk");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +38,7 @@ public class ClientChatScreen extends JFrame {
         scrollPane.setBounds(12, 12, 1120, 566);
         contentPane.add(scrollPane);
 
-        JTextArea textArea = new JTextArea();
+        textArea = new JTextArea();
         textArea.setFont(new Font("Dialog", Font.PLAIN, 20));
         textArea.setBounds(30, 30, 1044, 487);
         scrollPane.setViewportView(textArea);
@@ -41,9 +50,26 @@ public class ClientChatScreen extends JFrame {
         messageTextField.setColumns(10);
 
         JButton sendButton = new JButton("SEND");
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendMessage();
+            }
+        });
         sendButton.setFont(new Font("Dialog", Font.BOLD, 20));
         sendButton.setBounds(922, 609, 184, 59);
         contentPane.add(sendButton);
         setVisible(true);
+
+        client = new Client(textArea);
+    }
+
+    private void sendMessage() {
+        String message = messageTextField.getText();
+        try {
+            client.sendMessage(message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
