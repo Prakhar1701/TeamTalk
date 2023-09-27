@@ -1,6 +1,7 @@
 package views;
 
 import network.Client;
+import utils.UserInfo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,18 +12,10 @@ import java.io.IOException;
 
 public class ClientChatScreen extends JFrame {
 
-    private JPanel contentPane;
-    private JTextField messageTextField;
-    private JTextArea textArea;
-    private Client client;
-
-    public static void main(String[] args) {
-        try {
-            ClientChatScreen frame = new ClientChatScreen();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private final JPanel contentPane;
+    private final JTextField messageTextField;
+    private final JTextArea textArea;
+    private final Client client;
 
     public ClientChatScreen() throws IOException {
         setTitle("TeamTalk");
@@ -50,12 +43,7 @@ public class ClientChatScreen extends JFrame {
         messageTextField.setColumns(10);
 
         JButton sendButton = new JButton("SEND");
-        sendButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendMessage();
-            }
-        });
+        sendButton.addActionListener(e -> sendMessage());
         sendButton.setFont(new Font("Dialog", Font.BOLD, 20));
         sendButton.setBounds(922, 609, 184, 59);
         contentPane.add(sendButton);
@@ -64,10 +52,18 @@ public class ClientChatScreen extends JFrame {
         client = new Client(textArea);
     }
 
+    public static void main(String[] args) {
+        try {
+            ClientChatScreen frame = new ClientChatScreen();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void sendMessage() {
         String message = messageTextField.getText();
         try {
-            client.sendMessage(message);
+            client.sendMessage(UserInfo.USER_ID + " -> " + message);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

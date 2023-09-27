@@ -3,6 +3,9 @@ package views;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class DashBoard extends JFrame {
 
@@ -20,6 +23,16 @@ public class DashBoard extends JFrame {
         menuBar.add(chatMenu);
 
         JMenuItem startChat = new JMenuItem("Start Chat");
+        startChat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new ClientChatScreen();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         chatMenu.add(startChat);
 
         contentPane = new JPanel();
@@ -42,5 +55,4 @@ public class DashBoard extends JFrame {
         imageLable.setIcon(new ImageIcon(DashBoard.class.getResource("/images/people-team.jpg")));
         contentPane.add(imageLable, BorderLayout.CENTER);
     }
-
 }

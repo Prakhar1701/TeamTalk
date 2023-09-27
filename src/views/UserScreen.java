@@ -2,6 +2,7 @@ package views;
 
 import dao.UserDAO;
 import dto.UserDTO;
+import utils.UserInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -122,6 +123,8 @@ public class UserScreen extends JFrame {
             if (userDAO.isLogin(userDTO)) {
 
                 message = "Welcome " + userId + " !";
+
+                UserInfo.USER_ID = userId;
 
                 JOptionPane.showMessageDialog(this, message);
 

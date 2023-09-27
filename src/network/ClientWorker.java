@@ -24,7 +24,8 @@ public class ClientWorker extends Thread {
         try {
             while (true) {
                 line = br.readLine();
-                textArea.setText(textArea.getText() + line);
+                textArea.append(line);
+                textArea.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
